@@ -1,0 +1,50 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'//添加
+android {
+    compileSdkVersion 26
+    buildToolsVersion "25.0.3"
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions {
+        abortOnError false
+        warning 'InvalidPackage'
+    }
+
+
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    provided 'com.android.support:appcompat-v7:26.1.0'
+    testCompile 'junit:junit:4.12'
+}
+
+//添加
+publish {
+    userOrg = 'qianwen'//bintray.com用户名
+    groupId = 'com.qianwen'//jcenter上的路径
+    artifactId = 'update-app'//项目名称
+    publishVersion = rootProject.ext.update_app_version//版本号
+    desc = 'a library for android version update'
+    website = 'https://github.com/WVector/AppUpdate'
+}
+repositories {
+    mavenCentral()
+}
+
